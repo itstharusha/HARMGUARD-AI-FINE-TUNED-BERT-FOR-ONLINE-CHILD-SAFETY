@@ -6,7 +6,7 @@ import re
 # Load model and tokenizer
 @st.cache_resource
 def load_model():
-    model_path = "model/toxic-bert-child-safety"
+    model_path = "model"
     tokenizer = BertTokenizer.from_pretrained(model_path)
     model = BertForSequenceClassification.from_pretrained(model_path)
     model.eval()
