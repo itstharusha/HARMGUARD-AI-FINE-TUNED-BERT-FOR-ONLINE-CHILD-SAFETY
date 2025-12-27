@@ -7,10 +7,49 @@ import re
 # Page Configuration
 # =====================================================
 st.set_page_config(
-    page_title="SafeGuard AI - Child Online Safety Classifier",
+    page_title="HARMGUARD AI - Child Online Safety Classifier",
     page_icon="🛡️",
     layout="centered",
     initial_sidebar_state="collapsed",
+)
+
+# Inject professional font stack (Inter + system fallback)
+st.markdown(
+    """
+    <style>
+        /* Primary font: Inter (loaded from Google Fonts) with excellent system fallbacks */
+        html, body, [class*="css"]  {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+        
+        /* Headings - slightly bolder and larger line height */
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.3;
+        }
+        
+        /* Body text */
+        .stMarkdown, p, div, span {
+            line-height: 1.6;
+        }
+        
+        /* Buttons */
+        .stButton > button {
+            font-weight: 500;
+        }
+        
+        /* Captions and small text */
+        .caption, caption {
+            font-size: 0.85rem;
+        }
+    </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    """,
+    unsafe_allow_html=True,
 )
 
 # =====================================================
@@ -88,7 +127,7 @@ def render_header():
     st.markdown(
         """
         <div style="text-align: center; padding: 2rem 0 3rem;">
-            <h1 style="font-size: 2.8rem; margin-bottom: 0.5rem; color: var(--text-color);">SafeGuard AI</h1>
+            <h1 style="font-size: 2.8rem; margin-bottom: 0.5rem;">SafeGuard AI</h1>
             <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">
                 Real-time detection of harmful content in online messages to help protect children.
             </p>
@@ -142,9 +181,10 @@ def render_results(results: dict):
     verdict_title, verdict_type, verdict_message = get_verdict(max_prob)
 
     # Verdict Card
-    st.markdown(f"<h2 style='color: var(--text-color);'>{verdict_title}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2>{verdict_title}</h2>", unsafe_allow_html=True)
     st.markdown(
-        f"<div style='padding: 1rem; border-radius: 0.75rem; background-color: {'#fee2e2' if verdict_type=='error' else '#fef3c7' if verdict_type=='warning' else '#dcfce7'};'>"
+        f"<div style='padding: 1.2rem; border-radius: 0.75rem; background-color: {'#fee2e2' if verdict_type=='error' else '#fef3c7' if verdict_type=='warning' else '#dcfce7'}; "
+        f"border-left: 4px solid {'#ef4444' if verdict_type=='error' else '#f59e0b' if verdict_type=='warning' else '#22c55e'};'>"
         f"<p style='margin:0; font-size:1.1rem; font-weight:500; color: {'#991b1b' if verdict_type=='error' else '#92400e' if verdict_type=='warning' else '#166534'};'>"
         f"{verdict_message}</p></div>",
         unsafe_allow_html=True,
@@ -160,7 +200,7 @@ def render_results(results: dict):
                 prob = results[label]
                 display_name = label_display[label]
 
-                # Color logic
+                # Color logic for progress bar
                 if prob > 0.7:
                     color = "red"
                 elif prob > 0.4:
@@ -173,11 +213,10 @@ def render_results(results: dict):
                         label=display_name,
                         value=f"{prob:.1%}",
                     )
-                    st.progress(prob, text=None)
+                    st.progress(prob)
 
-                    # Highlight highest overall risk
                     if label == highest_label and prob == max_prob:
-                        st.caption("← Highest risk category", unsafe_allow_html=False)
+                        st.caption("← Highest risk category")
 
 
 def render_transparency_section():
