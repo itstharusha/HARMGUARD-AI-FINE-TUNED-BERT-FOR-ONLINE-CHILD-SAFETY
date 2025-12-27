@@ -127,7 +127,7 @@ def render_header():
     st.markdown(
         """
         <div style="text-align: center; padding: 2rem 0 3rem;">
-            <h1 style="font-size: 2.8rem; margin-bottom: 0.5rem;">SafeGuard AI</h1>
+            <h1 style="font-size: 2.8rem; margin-bottom: 0.5rem;">HARMGUARD AI</h1>
             <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">
                 Real-time detection of harmful content in online messages to help protect children.
             </p>
