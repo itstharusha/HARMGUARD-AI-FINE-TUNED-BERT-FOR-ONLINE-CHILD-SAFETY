@@ -14,4 +14,4 @@ Demonstrates AI engineering skills for protecting children online (relevant to r
 - Python, PyTorch, Transformers (BERT)
 - Streamlit for deployment
 
-Live Demo: [streamlit.app link here after deployment]
+Live Demo: [Streamlit App](https://harmguard-ai-fine-tuned-bert-for-online-child-safety-dbtj68xcb.streamlit.app/)
